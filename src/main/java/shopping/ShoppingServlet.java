@@ -1,9 +1,19 @@
 package shopping;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 import java.io.*;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import javax.sql.DataSource;
+
 import shopping.CD;
 public class ShoppingServlet extends HttpServlet {
   public void init(ServletConfig conf) throws ServletException  {
@@ -68,6 +78,9 @@ public class ShoppingServlet extends HttpServlet {
     }
   }
   private CD getCD(HttpServletRequest req) {
+	  
+	  
+    
     //imagine if all this was in a scriptlet...ugly, eh?
     String myCd = req.getParameter("CD");
     String qty = req.getParameter("qty");
@@ -85,4 +98,5 @@ public class ShoppingServlet extends HttpServlet {
     cd.setQuantity((new Integer(qty)).intValue());
     return cd;
   }
+ 
 }

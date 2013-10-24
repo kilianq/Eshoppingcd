@@ -1,4 +1,5 @@
 <%@ page session="true" import="java.util.*, shopping.CD" %>
+<%@page import="java.sql.*, javax.sql.*, javax.naming.*"%>
 <html>
 <head>
 <title>Music Without Borders Checkout</title>
@@ -21,6 +22,17 @@
  <%
   Vector buylist = (Vector) session.getValue("shopping.shoppingcart");
   String amount = (String) request.getAttribute("amount");
+  
+  //aqui nueva conexion para insert
+  Context envContext = envContext = new InitialContext();
+				Context initContext = (Context) envContext.lookup("java:/comp/env");
+				DataSource ds = (DataSource) initContext.lookup("jdbc/eshopping");
+				Connection con = ds.getConnection();
+				Statement Estamento = con.createStatement();
+				int res = Estamento.executeUpdate("insert into compras values('"
+						+ session.getId() + "','"
+						+ amount + "')");
+				
   for (int i=0; i < buylist.size();i++) {
    CD anOrder = (CD) buylist.elementAt(i);
  %>
